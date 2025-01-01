@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MobEffectInstanceMixin {
     @Shadow private int amplifier;
     @Shadow public abstract String getDescriptionId();
-    @Shadow private int duration;
 
     @Shadow public abstract String toString();
 
