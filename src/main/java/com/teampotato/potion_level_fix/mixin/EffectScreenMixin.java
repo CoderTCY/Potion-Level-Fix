@@ -20,12 +20,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EffectScreenMixin {
     @Inject(method = "getEffectName", at = @At(value = "RETURN"), cancellable = true)
     private void modifyEffectName(MobEffectInstance pEffect, CallbackInfoReturnable<Component> cir) {
-        MutableComponent mutablecomponent = pEffect.getEffect().getDisplayName().copy();
+        MutableComponent mutablecomponent = pEffect.getEffect().value().getDisplayName().copy();
         int amplifier = potion_level_fix$getAmplifier(pEffect);
 
         if (amplifier > 1){
             Component amplifierText = Component.literal(String.valueOf(amplifier));
-            if (PotionLevelFix.LANG.get()) {
+            if (PotionLevelFix.EFFECT_NUMBER.get()) {
                 amplifierText = Component.translatable("enchantment.level." + amplifier);
             }
             mutablecomponent.append(CommonComponents.SPACE).append(amplifierText);

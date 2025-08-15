@@ -1,12 +1,8 @@
 package com.teampotato.potion_level_fix.datagen;
 
-import com.google.common.collect.Lists;
 import com.teampotato.potion_level_fix.PotionLevelFix;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class ModLanguageProvider extends LanguageProvider {
     public ModLanguageProvider(PackOutput output, String languages) {
@@ -33,6 +29,7 @@ public class ModLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         for (int i = 11; i <= 4000; i++) {
             add("enchantment.level." + i, intToRoman(i));
+            add("potion.potency." + i, intToRoman(i));
         }
     }
 }

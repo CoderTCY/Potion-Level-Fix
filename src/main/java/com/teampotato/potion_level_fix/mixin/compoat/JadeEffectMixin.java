@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class JadeEffectMixin {
     @Inject(method = "getEffectName", at = @At(value = "RETURN"), cancellable = true, remap = false)
     private static void modifyEffectName(MobEffectInstance pEffect, CallbackInfoReturnable<Component> cir) {
-        MutableComponent mutablecomponent = pEffect.getEffect().getDisplayName().copy();
+        MutableComponent mutablecomponent = pEffect.getEffect().value().getDisplayName().copy();
         if (pEffect.getAmplifier() > 0){
             Component amplifier = Component.literal(String.valueOf(pEffect.getAmplifier() + 1));
-            if (PotionLevelFix.LANG.get()) {
+            if (PotionLevelFix.EFFECT_NUMBER.get()) {
                 amplifier = Component.translatable("enchantment.level." + (pEffect.getAmplifier() + 1));
             }
             mutablecomponent.append(CommonComponents.SPACE).append(amplifier);
