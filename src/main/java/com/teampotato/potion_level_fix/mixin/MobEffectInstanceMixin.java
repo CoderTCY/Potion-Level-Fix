@@ -30,7 +30,7 @@ public abstract class MobEffectInstanceMixin {
 
     @ModifyVariable(method = "loadSpecifiedEffect", at = @At(value = "STORE"), ordinal = 0)
     private static int amplifierGet(int i, MobEffect pEffect, CompoundTag pNbt) {
-        return pNbt.getInt("PLF:Amplifier");
+        return pNbt.contains("PLF:Amplifier") ? pNbt.getInt("PLF:Amplifier") : pNbt.getInt("Amplifier");
     }
 
     @Inject(method = "tick", at = @At("HEAD"))

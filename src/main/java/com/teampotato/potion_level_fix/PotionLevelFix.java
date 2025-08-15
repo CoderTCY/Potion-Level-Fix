@@ -14,13 +14,17 @@ public class PotionLevelFix {
     public static final String MODID = "potion_level_fix";
     public static final Logger LOGGER = LoggerFactory.getLogger("PotionLevelFix");
     public static ForgeConfigSpec CONFIG;
-    public static ForgeConfigSpec.BooleanValue LANG;
+    public static ForgeConfigSpec.BooleanValue EFFECT_NUMBER;
+    public static ForgeConfigSpec.BooleanValue POTION_NUMBER;
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         builder.push("Potion Level Fix");
-        LANG = builder
-                .comment("If true, display using Roman numerals (vanilla); if false, display using Arabic numerals.")
-                .define("Number type", true);
+        EFFECT_NUMBER = builder
+                .comment("If true, effect display using Roman numerals (vanilla); if false, display using Arabic numerals.")
+                .define("Effect Number Type", true);
+        POTION_NUMBER = builder
+                .comment("If true, potion display using Roman numerals (vanilla); if false, display using Arabic numerals.")
+                .define("Potion Number Type", true);
         builder.pop();
         CONFIG = builder.build();
     }
