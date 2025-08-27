@@ -11,9 +11,4 @@ public class EffectCommandsMixin {
     private static int amplifierChange(int constant){
         return Integer.MAX_VALUE-1;
     }
-
-    @ModifyConstant(method = "register", constant = @Constant(intValue = 255, ordinal = 1))
-    private static int amplifierInfiniteChange(int constant){
-        return Integer.MAX_VALUE-1;
-    }
 }

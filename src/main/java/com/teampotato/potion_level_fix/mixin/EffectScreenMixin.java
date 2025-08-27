@@ -28,7 +28,7 @@ public abstract class EffectScreenMixin {
             if (PotionLevelFix.EFFECT_NUMBER.get()) {
                 amplifierText = Component.translatable("enchantment.level." + amplifier);
             }
-            mutablecomponent.append(CommonComponents.SPACE).append(amplifierText);
+            mutablecomponent.append(" ").append(amplifierText);
         }
         cir.setReturnValue(mutablecomponent);
     }

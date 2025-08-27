@@ -1,15 +1,11 @@
 package com.teampotato.potion_level_fix.datagen;
 
-import com.google.common.collect.Lists;
 import com.teampotato.potion_level_fix.PotionLevelFix;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ModLanguageProvider extends LanguageProvider {
-    public ModLanguageProvider(PackOutput output, String languages) {
+    public ModLanguageProvider(DataGenerator output, String languages) {
         super(output, PotionLevelFix.MODID, languages);
     }
 
