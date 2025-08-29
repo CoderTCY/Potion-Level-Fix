@@ -21,6 +21,6 @@ public class PotionUtilsMixin {
             )
     )
     private static TranslatableComponent configPotionTooltips(String key, Operation<TranslatableComponent> original, @Local MobEffectInstance mobeffectinstance) {
-        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : new TranslatableComponent("%s".formatted(mobeffectinstance.getAmplifier()));
+        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : new TranslatableComponent(String.format("%s", mobeffectinstance.getAmplifier()));
     }
 }

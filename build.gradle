@@ -1,6 +1,6 @@
 plugins {
-    id 'idea'
-    id 'net.neoforged.moddev.legacyforge' version '2.0.78'
+    id "dev.architectury.loom" version "1.4-SNAPSHOT"
+    id "maven-publish"
 }
 
 group = mod_group_id
@@ -11,53 +11,18 @@ base {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 }
-legacyForge {
-    version = "${minecraft_version}-${forge_version}"
 
+loom {
+    silentMojangMappingsLicense()
 
-    if (mapping_channel=="parchment"){
-        parchment {
-            minecraftVersion = minecraft_version
-            mappingsVersion = mapping_version
-        }
+    forge {
+        mixinConfigs = [
+                "mixins.${mod_id}.json"
+        ]
     }
-
-    runs {
-        client {
-            client()
-        }
-        data {
-            data()
-        }
-        server {
-            server()
-            setGameDirectory(file("server"))
-        }
-        data {
-            data()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-
-        configureEach {
-            jvmArgument "-XX:+IgnoreUnrecognizedVMOptions"
-            jvmArgument "-XX:+AllowEnhancedClassRedefinition"
-            jvmArgument "-XX:HotswapAgent=fatjar"
-            getJvmArguments().addAll "--add-opens", "java.base/java.lang.invoke=cpw.mods.securejarhandler"
-
-            logLevel = org.slf4j.event.Level.DEBUG
-            if (isRunningInIdea()) {
-                systemProperty "terminal.jline", "true"
-            }
-        }
-    }
-
-    mods {
-        testproject {
-            sourceSet sourceSets.main
-        }
-    }
+    mixin.defaultRefmapName.set("${mod_id}.refmap.json")
 }
 
 repositories {
@@ -71,19 +36,19 @@ repositories {
 
 dependencies {
 //    modImplementation("curse.maven:attributefix-280510:4911084")
-    modCompileOnly("curse.maven:jade-324717:${jade_version}")
-    modRuntimeOnly("curse.maven:jade-324717:${jade_version}")
-    
-    compileOnly 'org.jetbrains:annotations:24.0.1'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    mappings loom.officialMojangMappings()
+    forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+
+    compileOnly("curse.maven:jade-324717:${jade_version}")
+    runtimeOnly("curse.maven:jade-324717:${jade_version}")
+
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0"))
-    modImplementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.0"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:0.5.0"))
 }
 
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-    config "mixins.${mod_id}.json"
-}
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
@@ -100,7 +65,12 @@ processResources {
 
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
-    }}
+    }
+}
+
+java {
+    withSourcesJar()
+}
 
 jar {
     manifest.attributes([
@@ -117,6 +87,10 @@ jar {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    def targetVersion = 8
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.release = targetVersion
+    }
 }
 
 def isRunningInIdea() {

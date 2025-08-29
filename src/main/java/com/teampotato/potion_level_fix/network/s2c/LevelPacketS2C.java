@@ -5,12 +5,20 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public record LevelPacketS2C(String id, int amplifier) {
-    public static LevelPacketS2C sentEffect(String id, int amplifier){
+public class LevelPacketS2C {
+    private final String id;
+    private final int amplifier;
+
+    public LevelPacketS2C(String id, int amplifier) {
+        this.id = id;
+        this.amplifier = amplifier;
+    }
+
+    public static LevelPacketS2C sentEffect(String id, int amplifier) {
         return new LevelPacketS2C(id, amplifier);
     }
 
@@ -30,15 +38,15 @@ public record LevelPacketS2C(String id, int amplifier) {
             CompoundTag persistentData = localPlayer.getPersistentData();
             ListTag listTag = new ListTag();
 
-            if (persistentData.contains("PLF:Amplifier")){
+            if (persistentData.contains("PLF:Amplifier")) {
                 listTag = persistentData.getList("PLF:Amplifier", 10);
             }
 
             CompoundTag compoundTag = new CompoundTag();
             compoundTag.putInt(packet.id, packet.amplifier);
-            for (int size = 0; size < listTag.size(); size++){
+            for (int size = 0; size < listTag.size(); size++) {
                 CompoundTag tag = (CompoundTag) listTag.get(size);
-                if (tag.contains(packet.id)){
+                if (tag.contains(packet.id)) {
                     listTag.set(size, compoundTag);
                     localPlayer.getPersistentData().put("PLF:Amplifier", listTag);
                     return;

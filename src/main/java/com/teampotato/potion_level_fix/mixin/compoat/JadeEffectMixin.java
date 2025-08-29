@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Pseudo
 @Mixin(targets = "snownee.jade.addon.vanilla.PotionEffectsProvider", remap = false)
 public abstract class JadeEffectMixin {
-    @WrapOperation(method = "appendTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/resources/language/I18n;exists(Ljava/lang/String;)Z"))
+    @WrapOperation(method = "appendBody", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/resources/I18n;func_188566_a(Ljava/lang/String;)Z"))
     private boolean configNumber(String key, Operation<Boolean> original, @Local CompoundTag compound) {
         return (PotionLevelFix.EFFECT_NUMBER.get() || compound.getInt("Amplifier") == 0) && original.call(key);
     }
 
-    @ModifyArg(method = "appendTooltip", at = @At(value = "INVOKE", target = "Ljava/lang/Integer;toString(I)Ljava/lang/String;"))
+    @ModifyArg(method = "appendBody", at = @At(value = "INVOKE", target = "Ljava/lang/Integer;toString(I)Ljava/lang/String;"))
     private int plusOne(int i) {
         return i + 1;
     }

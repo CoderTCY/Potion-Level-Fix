@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.fml.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +35,8 @@ public abstract class MobEffectInstanceMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void sentAmplifier(LivingEntity pEntity, Runnable pOnExpirationRunnable, CallbackInfoReturnable<Boolean> cir){
-        if (pEntity instanceof ServerPlayer serverPlayer){
+        if (pEntity instanceof ServerPlayer){
+            ServerPlayer serverPlayer = (ServerPlayer) pEntity;
             NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(
                     () -> serverPlayer),
                     LevelPacketS2C.sentEffect(getDescriptionId(), amplifier)

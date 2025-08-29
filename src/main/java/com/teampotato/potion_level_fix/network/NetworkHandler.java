@@ -3,8 +3,8 @@ package com.teampotato.potion_level_fix.network;
 import com.teampotato.potion_level_fix.PotionLevelFix;
 import com.teampotato.potion_level_fix.network.s2c.LevelPacketS2C;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public final class NetworkHandler {
     public static final String PROTOCOL_VERSION = "1";

@@ -1,37 +1,35 @@
 package com.teampotato.potion_level_fix.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.teampotato.potion_level_fix.PotionLevelFix;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+
 @Mixin(EffectRenderingInventoryScreen.class)
 public abstract class EffectScreenMixin {
-    @Inject(method = "getEffectName", at = @At(value = "RETURN"), cancellable = true)
-    private void modifyEffectName(MobEffectInstance pEffect, CallbackInfoReturnable<Component> cir) {
-        MutableComponent mutablecomponent = pEffect.getEffect().getDisplayName().copy();
+    @ModifyArg(method = "renderLabels", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;drawShadow(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/lang/String;FFI)I", ordinal = 0), index = 1)
+    private String modifyEffectName(String string, @Local MobEffectInstance pEffect) {
+        String id = I18n.get(pEffect.getEffect().getDescriptionId());
         int amplifier = potion_level_fix$getAmplifier(pEffect);
 
         if (amplifier > 1){
-            Component amplifierText = new TextComponent(String.valueOf(amplifier));
+            String amplifierText = String.valueOf(amplifier);
             if (PotionLevelFix.EFFECT_NUMBER.get()) {
-                amplifierText = new TranslatableComponent("enchantment.level." + amplifier);
+                amplifierText = I18n.get("enchantment.level." + amplifier);
             }
-            mutablecomponent.append(" ").append(amplifierText);
+            id = id + " " + amplifierText;
         }
-        cir.setReturnValue(mutablecomponent);
+        return id;
     }
 
     @Unique
