@@ -7,9 +7,10 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,9 +25,9 @@ public abstract class EffectScreenMixin {
         int amplifier = potion_level_fix$getAmplifier(pEffect);
 
         if (amplifier > 1){
-            Component amplifierText = Component.literal(String.valueOf(amplifier));
+            Component amplifierText = new TextComponent(String.valueOf(amplifier));
             if (PotionLevelFix.EFFECT_NUMBER.get()) {
-                amplifierText = Component.translatable("enchantment.level." + amplifier);
+                amplifierText = new TranslatableComponent("enchantment.level." + amplifier);
             }
             mutablecomponent.append(" ").append(amplifierText);
         }

@@ -4,8 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.teampotato.potion_level_fix.PotionLevelFix;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,12 +15,12 @@ public class PotionUtilsMixin {
     @WrapOperation(
             method = "addPotionTooltip(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;F)V",
             at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;",
-                    ordinal = 1
+                    value = "NEW",
+                    target = "(Ljava/lang/String;)Lnet/minecraft/network/chat/TranslatableComponent;",
+                    ordinal = 2
             )
     )
-    private static MutableComponent configPotionTooltips(String key, Operation<MutableComponent> original, @Local() MobEffectInstance mobeffectinstance) {
-        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : Component.literal("%s".formatted(mobeffectinstance.getAmplifier()));
+    private static TranslatableComponent configPotionTooltips(String key, Operation<TranslatableComponent> original, @Local MobEffectInstance mobeffectinstance) {
+        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : new TranslatableComponent("%s".formatted(mobeffectinstance.getAmplifier()));
     }
 }
