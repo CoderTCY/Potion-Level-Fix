@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.teampotato.potion_level_fix.mixin.client",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"compoat.JadeEffectMixin",
+		"EffectScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

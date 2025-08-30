@@ -1,4 +1,4 @@
-package com.teampotato.potion_level_fix.mixin;
+package com.teampotato.potion_level_fix.mixin.client;
 
 import com.teampotato.potion_level_fix.PotionLevelFix;
 import net.minecraft.client.Minecraft;
@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 @Mixin(EffectRenderingInventoryScreen.class)
 public abstract class EffectScreenMixin {
     @Inject(method = "getEffectName", at = @At(value = "RETURN"), cancellable = true)

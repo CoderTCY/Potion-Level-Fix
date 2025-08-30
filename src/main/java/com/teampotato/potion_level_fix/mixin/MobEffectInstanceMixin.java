@@ -2,12 +2,13 @@ package com.teampotato.potion_level_fix.mixin;
 
 import com.teampotato.potion_level_fix.network.NetworkHandler;
 import com.teampotato.potion_level_fix.network.s2c.LevelPacketS2C;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.network.PacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,6 +37,7 @@ public abstract class MobEffectInstanceMixin {
     @Inject(method = "tick", at = @At("HEAD"))
     private void sentAmplifier(LivingEntity pEntity, Runnable pOnExpirationRunnable, CallbackInfoReturnable<Boolean> cir){
         if (pEntity instanceof ServerPlayer serverPlayer){
+            ServerPlayNetworking.send(serverPlayer, NetworkHandler.LEVEL_PACKET_ID, PacketByteBufs.empty());
             NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with(
                     () -> serverPlayer),
                     LevelPacketS2C.sentEffect(getDescriptionId(), amplifier)

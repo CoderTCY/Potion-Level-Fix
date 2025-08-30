@@ -1,6 +1,7 @@
 package com.teampotato.potion_level_fix;
 
 import com.teampotato.potion_level_fix.network.NetworkHandler;
+import net.fabricmc.api.ModInitializer;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -8,9 +9,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Mod(PotionLevelFix.MODID)
-@Mod.EventBusSubscriber(modid = PotionLevelFix.MODID)
-public class PotionLevelFix {
+public class PotionLevelFix implements ModInitializer {
     public static final String MODID = "potion_level_fix";
     public static final Logger LOGGER = LoggerFactory.getLogger("PotionLevelFix");
     public static ForgeConfigSpec CONFIG;
@@ -28,7 +27,9 @@ public class PotionLevelFix {
         builder.pop();
         CONFIG = builder.build();
     }
-    public PotionLevelFix() {
+
+    @Override
+    public void onInitialize() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG);
         NetworkHandler.register();
     }

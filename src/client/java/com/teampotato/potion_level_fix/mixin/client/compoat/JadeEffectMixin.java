@@ -1,4 +1,4 @@
-package com.teampotato.potion_level_fix.mixin.compoat;
+package com.teampotato.potion_level_fix.mixin.client.compoat;
 
 import com.teampotato.potion_level_fix.PotionLevelFix;
 import net.minecraft.network.chat.CommonComponents;
@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 @Pseudo
 @Mixin(targets = "snownee.jade.addon.vanilla.StatusEffectsProvider")
 public class JadeEffectMixin {

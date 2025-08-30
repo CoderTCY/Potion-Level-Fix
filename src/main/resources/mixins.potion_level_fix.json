@@ -7,11 +7,7 @@
   "mixins": [
     "EffectCommandsMixin",
     "MobEffectInstanceMixin",
-    "PotionUtilsMixin",
-    "compoat.JadeEffectMixin"
-  ],
-  "client": [
-    "EffectScreenMixin"
+    "PotionUtilsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
