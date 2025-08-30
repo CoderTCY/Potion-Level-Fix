@@ -21,7 +21,7 @@ public abstract class EffectScreenMixin {
     @Inject(method = "getEffectName", at = @At(value = "RETURN"), cancellable = true)
     private void modifyEffectName(MobEffectInstance pEffect, CallbackInfoReturnable<Component> cir) {
         MutableComponent mutablecomponent = pEffect.getEffect().getDisplayName().copy();
-        int amplifier = potion_level_fix$getAmplifier(pEffect);
+        int amplifier = pEffect.getAmplifier() + 1;
 
         if (amplifier > 1){
             Component amplifierText = Component.literal(String.valueOf(amplifier));
@@ -31,25 +31,5 @@ public abstract class EffectScreenMixin {
             mutablecomponent.append(CommonComponents.SPACE).append(amplifierText);
         }
         cir.setReturnValue(mutablecomponent);
-    }
-
-    @Unique
-    private static int potion_level_fix$getAmplifier(MobEffectInstance pEffect) {
-        LocalPlayer localPlayer = Minecraft.getInstance().player;
-        CompoundTag persistentData = localPlayer.getPersistentData();
-        ListTag listTag = new ListTag();
-        int amplifier = 0;
-
-        if (persistentData.contains("PLF:Amplifier")){
-            listTag = persistentData.getList("PLF:Amplifier", 10);
-        }
-
-        for (Tag value : listTag) {
-            CompoundTag tag = (CompoundTag) value;
-            if (tag.contains(pEffect.getDescriptionId())) {
-                amplifier = tag.getInt(pEffect.getDescriptionId()) + 1;
-            }
-        }
-        return amplifier;
     }
 }
