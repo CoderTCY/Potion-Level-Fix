@@ -16,13 +16,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(EffectRenderingInventoryScreen.class)
-public abstract class EffectScreenMixin {
-    @ModifyArg(method = "renderLabels", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;drawShadow(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/lang/String;FFI)I", ordinal = 0), index = 1)
+public class EffectScreenMixin {
+    @ModifyArg(method = "renderLabels",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/Font;drawShadow(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/lang/String;FFI)I",
+                    ordinal = 0
+            ),
+            index = 1
+    )
     private String modifyEffectName(String string, @Local MobEffectInstance pEffect) {
         String id = I18n.get(pEffect.getEffect().getDescriptionId());
         int amplifier = potion_level_fix$getAmplifier(pEffect);
 
-        if (amplifier > 1){
+        if (amplifier > 1) {
             String amplifierText = String.valueOf(amplifier);
             if (PotionLevelFix.EFFECT_NUMBER.get()) {
                 amplifierText = I18n.get("enchantment.level." + amplifier);

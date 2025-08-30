@@ -5,14 +5,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 @Mod(PotionLevelFix.MODID)
-@Mod.EventBusSubscriber(modid = PotionLevelFix.MODID)
 public class PotionLevelFix {
     public static final String MODID = "potion_level_fix";
-    public static final Logger LOGGER = LoggerFactory.getLogger("PotionLevelFix");
+    public static final Logger LOGGER = LogManager.getLogger(MODID);
     public static ForgeConfigSpec CONFIG;
     public static ForgeConfigSpec.BooleanValue EFFECT_NUMBER;
     public static ForgeConfigSpec.BooleanValue POTION_NUMBER;

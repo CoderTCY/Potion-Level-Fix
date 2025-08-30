@@ -23,7 +23,7 @@ public abstract class MobEffectInstanceMixin {
 
     @Shadow public abstract String toString();
 
-    @Inject(method = "writeDetailsTo", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;putByte(Ljava/lang/String;B)V"))
+    @Inject(method = "writeDetailsTo", at = @At(value = "HEAD"))
     private void redirectPutByte(CompoundTag pNbt, CallbackInfo ci) {
         pNbt.putInt("PLF:Amplifier", amplifier);
     }

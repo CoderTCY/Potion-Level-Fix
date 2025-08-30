@@ -28,11 +28,11 @@ public class ModLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         for (int i = 6; i < 11; i++) {
-            add("potion.potency." + i, intToRoman(i));
+            add("potion.potency." + i, intToRoman(i+1));
         }
         for (int i = 11; i <= 4000; i++) {
             add("enchantment.level." + i, intToRoman(i));
-            add("potion.potency." + i, intToRoman(i));
+            add("potion.potency." + i, intToRoman(i+1));
         }
     }
 }
