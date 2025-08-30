@@ -66,9 +66,9 @@ repositories {
 }
 
 dependencies {
-    modImplementation("curse.maven:attributefix-280510:4911084")
-    modCompileOnly("curse.maven:jade-324717:5390389")
-    modRuntimeOnly("curse.maven:jade-324717:5390389")
+//    modImplementation("curse.maven:attributefix-280510:4911084")
+    modCompileOnly("curse.maven:jade-324717:${jade_version}")
+    modRuntimeOnly("curse.maven:jade-324717:${jade_version}")
     
     compileOnly 'org.jetbrains:annotations:24.0.1'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
