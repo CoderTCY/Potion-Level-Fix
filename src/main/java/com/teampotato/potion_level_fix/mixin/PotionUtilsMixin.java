@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.teampotato.potion_level_fix.PotionLevelFix;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import org.spongepowered.asm.mixin.Mixin;
