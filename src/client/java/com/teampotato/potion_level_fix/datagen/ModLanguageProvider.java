@@ -1,4 +1,4 @@
-package com.teampotato.potion_level_fix.mixin.client.datagen;
+package com.teampotato.potion_level_fix.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;

@@ -30,7 +30,5 @@ public class PotionLevelFix implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG);
-        NetworkHandler.register();
     }
 }
