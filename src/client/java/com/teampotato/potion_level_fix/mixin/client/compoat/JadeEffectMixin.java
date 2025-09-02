@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
-@Mixin(targets = "snownee.jade.addon.vanilla.StatusEffectsProvider", remap = false)
+@Mixin(targets = "snownee.jade.addon.vanilla.StatusEffectsProvider")
 public class JadeEffectMixin {
     @Definition(id = "mobEffectInstance", local = @Local(argsOnly = true, type = MobEffectInstance.class))
     @Definition(id = "getAmplifier", method = "Lnet/minecraft/world/effect/MobEffectInstance;getAmplifier()I")
