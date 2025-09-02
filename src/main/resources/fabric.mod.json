@@ -3,19 +3,18 @@
 	"id": "potion_level_fix",
 	"version": "${version}",
 	"name": "Potion level fix",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Fix some bugs about Minecraft's potion effect and enchantment.",
 	"authors": [
-		"Me!"
+		"KalebLangley"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/MCTeamPotato/Potion-Level-Fix"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPLv3.0",
 	"environment": "*",
 	"entrypoints": {
 		"fabric-datagen": [
-			"com.teampotato.potion_level_fix."
+			"com.teampotato.potion_level_fix.datagen.DataGenerator"
 		],
 		"main": [
 			"com.teampotato.potion_level_fix.PotionLevelFix"
@@ -33,7 +32,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.17.2",
-		"minecraft": "*",
+		"minecraft": ">=1.19.3 <=1.20.1",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
