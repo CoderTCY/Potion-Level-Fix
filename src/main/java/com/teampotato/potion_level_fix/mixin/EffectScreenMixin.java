@@ -1,56 +1,25 @@
 package com.teampotato.potion_level_fix.mixin;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.teampotato.potion_level_fix.PotionLevelFix;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 @Mixin(EffectRenderingInventoryScreen.class)
 public abstract class EffectScreenMixin {
-    @Inject(method = "getEffectName", at = @At(value = "RETURN"), cancellable = true)
-    private void modifyEffectName(MobEffectInstance pEffect, CallbackInfoReturnable<Component> cir) {
-        MutableComponent mutablecomponent = pEffect.getEffect().getDisplayName().copy();
-        int amplifier = potion_level_fix$getAmplifier(pEffect);
-
-        if (amplifier > 1){
-            Component amplifierText = new TextComponent(String.valueOf(amplifier));
-            if (PotionLevelFix.EFFECT_NUMBER.get()) {
-                amplifierText = new TranslatableComponent("enchantment.level." + amplifier);
-            }
-            mutablecomponent.append(" ").append(amplifierText);
-        }
-        cir.setReturnValue(mutablecomponent);
+    @Definition(id = "getAmplifier", method = "Lnet/minecraft/world/effect/MobEffectInstance;getAmplifier()I")
+    @Expression("?.getAmplifier() <= 9")
+    @ModifyExpressionValue(method = "getEffectName", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private boolean greaterTrue(boolean original) {
+        return true;
     }
 
-    @Unique
-    private static int potion_level_fix$getAmplifier(MobEffectInstance pEffect) {
-        LocalPlayer localPlayer = Minecraft.getInstance().player;
-        CompoundTag persistentData = localPlayer.getPersistentData();
-        ListTag listTag = new ListTag();
-        int amplifier = 0;
-
-        if (persistentData.contains("PLF:Amplifier")){
-            listTag = persistentData.getList("PLF:Amplifier", 10);
-        }
-
-        for (Tag value : listTag) {
-            CompoundTag tag = (CompoundTag) value;
-            if (tag.contains(pEffect.getDescriptionId())) {
-                amplifier = tag.getInt(pEffect.getDescriptionId()) + 1;
-            }
-        }
-        return amplifier;
+    @Expression("'enchantment.level.'")
+    @ModifyExpressionValue(method = "getEffectName", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private String hackI18Key(String original) {
+        return PotionLevelFix.EFFECT_NUMBER.get() ? original : "";
     }
 }
