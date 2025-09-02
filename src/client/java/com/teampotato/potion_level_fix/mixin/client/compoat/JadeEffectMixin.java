@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
-@Mixin(targets = "snownee.jade.addon.vanilla.StatusEffectsProvider")
+@Mixin(targets = "snownee.jade.addon.vanilla.StatusEffectsProvider", remap = false)
 public class JadeEffectMixin {
     @Definition(id = "mobEffectInstance", local = @Local(argsOnly = true, type = MobEffectInstance.class))
     @Definition(id = "getAmplifier", method = "Lnet/minecraft/world/effect/MobEffectInstance;getAmplifier()I")
@@ -29,6 +29,6 @@ public class JadeEffectMixin {
     @Expression("'enchantment.level.'")
     @ModifyExpressionValue(method = "getEffectName", at = @At("MIXINEXTRAS:EXPRESSION"))
     private static String hackI18Key(String original) {
-        return PotionLevelFix.EFFECT_NUMBER.get() ? original : "";
+        return PotionLevelFix.CONFIG.effectNumberType ? original : "";
     }
 }

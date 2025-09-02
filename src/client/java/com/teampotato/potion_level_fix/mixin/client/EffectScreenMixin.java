@@ -23,6 +23,6 @@ public abstract class EffectScreenMixin {
     @Expression("'enchantment.level.'")
     @ModifyExpressionValue(method = "getEffectName", at = @At("MIXINEXTRAS:EXPRESSION"))
     private String hackI18Key(String original) {
-        return PotionLevelFix.EFFECT_NUMBER.get() ? original : "";
+        return PotionLevelFix.CONFIG.effectNumberType ? original : "";
     }
 }
