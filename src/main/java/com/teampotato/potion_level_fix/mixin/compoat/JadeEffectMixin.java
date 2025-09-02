@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Pseudo
-@Mixin(targets = "snownee.jade.addon.vanilla.PotionEffectsProvider", remap = false)
+@Mixin(targets = "snownee.jade.addon.vanilla.PotionEffectsProvider")
 public abstract class JadeEffectMixin {
     @WrapOperation(method = "appendTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/resources/language/I18n;exists(Ljava/lang/String;)Z"))
     private boolean configNumber(String key, Operation<Boolean> original, @Local CompoundTag compound) {
