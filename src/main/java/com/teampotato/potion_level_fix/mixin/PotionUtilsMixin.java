@@ -20,7 +20,7 @@ public class PotionUtilsMixin {
                     ordinal = 2
             )
     )
-    private static TranslatableComponent configPotionTooltips(String key, Operation<TranslatableComponent> original, @Local MobEffectInstance mobeffectinstance) {
-        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : new TranslatableComponent("%s".formatted(mobeffectinstance.getAmplifier()));
+    private static TranslatableComponent configPotionTooltips(String key, Operation<TranslatableComponent> original, @Local(type = MobEffectInstance.class) MobEffectInstance mobeffectinstance) {
+        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : new TranslatableComponent("%s".formatted(mobeffectinstance.getAmplifier()+1));
     }
 }
