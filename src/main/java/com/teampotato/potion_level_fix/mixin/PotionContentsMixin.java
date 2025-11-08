@@ -22,6 +22,6 @@ public class PotionContentsMixin {
             )
     )
     private static MutableComponent configPotionTooltips(String key, Operation<MutableComponent> original, @Local() MobEffectInstance mobeffectinstance) {
-        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : Component.literal("%s".formatted(mobeffectinstance.getAmplifier()));
+        return PotionLevelFix.POTION_NUMBER.get() ? original.call(key) : Component.literal("%s".formatted(mobeffectinstance.getAmplifier()+1));
     }
 }
